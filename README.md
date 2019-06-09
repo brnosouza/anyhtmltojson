@@ -1,4 +1,4 @@
-# grunt-html2json
+# html2json
 
 > Transform HTML in JSON string
 
@@ -28,62 +28,39 @@ grunt.initConfig({
     options: {
       // Task-specific options go here.
     },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
+     dist: { // or any other target
+       src: ['src/*.txt', 'src/*.html'],
+       dest: 'dist/templates.json'
+    }
   },
 });
 ```
 
 ### Options
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
+#### options.pretty_print
+Type: `boolean`
+Default value: `false`
 
-A string value that is used to do something with whatever.
+Pretty print or not final JSON. 
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
+#### options.htmlmin
+Type: `boolean`
+Default value: `true`
 
-A string value that is used to do something else with whatever else.
+Enable HTML minification.
 
-### Usage Examples
+#### options.htmlmin
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+See the `html-minifier` [options](https://github.com/kangax/html-minifier#options-quick-reference).
+ 
 
-```js
-grunt.initConfig({
-  html2json: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  html2json: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+- 0.1
+    - Transform any html in json string, where key is your file path.
+    - Minimize or pretty print JSON data
+    - Added support for HTML minification

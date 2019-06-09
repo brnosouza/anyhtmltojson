@@ -1,3 +1,10 @@
+'use strict';
+
+const chalk = require('chalk');
+const minify = require('html-minifier').minify;
+const EOL = require('os').EOL;
+const prettyBytes = require('pretty-bytes');
+
 /*
  * grunt-html2json
  * https://github.com/bsouza/html2json
@@ -6,45 +13,99 @@
  * Licensed under the MIT license.
  */
 
-'use strict';
+class HTML2JSON {
+    constructor(grunt) {
+        this.defaults = {
+            pretty_print  : false,
+            enable_htmlmin: true,
+            htmlmin       : {
+                collapseWhitespace : true,
+                minifyCSS          : true,
+                minifyJS           : true,
+                minifyURLs         : true,
+                preserveLineBreaks : false,
+                removeComments     : true,
+                removeOptionalTags : true,
+                removeTagWhitespace: true
+            }
+        };
 
-module.exports = function(grunt) {
+        this.errorCount = 0;
 
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
+        this.options = {};
 
-  grunt.registerMultiTask('html2json', 'Transform HTML in JSON string', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
-    });
+        this.grunt = grunt;
+    }
 
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
+    transform(files) {
+        const ret = {};
+
+        for (let i = 0; i < files.length; i++) {
+            const filepath = files[i];
+
+            if (!this.grunt.file.isDir(filepath)) {
+                const key = filepath.split('/').slice(1).join('/');
+                ret[key] = this.minimize(filepath);
+            }
         }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
 
-      // Handle options.
-      src += options.punctuation;
+        return ret;
+    }
 
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
+    minimize(filepath) {
+        const content = this.grunt.file.read(filepath, this.grunt.file.read);
+        let minifiedHtml = content;
 
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
-    });
-  });
+        if (this.options.enable_htmlmin) {
+            try {
+                minifiedHtml = minify(content, this.options.htmlmin);
+            } catch (err) {
+                this.grunt.warn(`${ filepath } ${ EOL } ${ err }`);
+                this.errorCount++;
+                return;
+            }
 
+            this.grunt
+                .verbose
+                .writeln(`Minified ${ chalk.cyan(filepath) } ${ prettyBytes(content.length) } → ${ prettyBytes(minifiedHtml.length) }`);
+        }
+
+        return minifiedHtml;
+    }
+
+    handleFinalJSON(json) {
+        try {
+            if (this.options.pretty_print) {
+                return JSON.stringify(json, null, 4);
+            } else {
+                return JSON.stringify(json);
+            }
+        } catch (e) {
+            this.errorCount++;
+        }
+    }
+
+    ready() {
+        const self = this;
+
+        this.grunt.registerMultiTask('html2json', 'Transform HTML in JSON string', function () {
+            self.options = this.options(this.defaults);
+
+            for (let i = 0; i < this.files.length; i++) {
+                const file = this.files[i];
+                const files = self.grunt.file.expand(file.src);
+
+                const content = self.transform(files);
+
+                self.grunt.file.write(file.dest, self.handleFinalJSON(content));
+
+                // Fail task if errors were logged.
+                if (self.errorCount) { return false; }
+            }
+        });
+    }
+}
+
+module.exports = function (grunt) {
+    new HTML2JSON(grunt).ready();
 };

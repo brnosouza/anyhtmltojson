@@ -25,7 +25,6 @@ class AnyHTMLToJSON {
                 minifyURLs         : true,
                 preserveLineBreaks : false,
                 removeComments     : true,
-                removeOptionalTags : true,
                 removeTagWhitespace: true
             }
         };
@@ -59,7 +58,6 @@ class AnyHTMLToJSON {
         if (this.options.enable_htmlmin) {
             try {
                 minifiedHtml = minify(content, this.options.htmlmin);
-                console.log(minifiedHtml);
             } catch (err) {
                 this.grunt.warn(`${ filepath } ${ EOL } ${ err }`);
                 this.errorCount++;

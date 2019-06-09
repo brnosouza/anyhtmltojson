@@ -75,7 +75,6 @@ Default:
   "minifyURLs": true,
   "preserveLineBreaks": false,
   "removeComments": true,
-  "removeOptionalTags": true,
   "removeTagWhitespace": true
 }
 ```

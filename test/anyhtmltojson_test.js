@@ -20,7 +20,7 @@
  test.ifError(value)
  */
 
-exports.html2json = {
+exports.anyhtmltojson = {
     setUp: function (done) {
         // setup here if necessary
         done();

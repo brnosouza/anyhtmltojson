@@ -1,6 +1,6 @@
 /*
- * grunt-html2json
- * https://github.com/bsouza/html2json
+ * anyhtmltojson
+ * https://github.com/brnosouza/anyhtmltojson
  *
  * Copyright (c) 2019 Bruno Souza
  * Licensed under the MIT license.
@@ -28,7 +28,7 @@ module.exports = function (grunt) {
         },
 
         // Configuration to be run (and then tested).
-        html2json: {
+        anyhtmltojson: {
             options: {
                 pretty_print: true
             },
@@ -55,7 +55,7 @@ module.exports = function (grunt) {
 
     // Whenever the "test" task is run, first clean the "tmp" dir, then run this
     // plugin's task(s), then test the result.
-    grunt.registerTask('test', ['clean', 'html2json', 'nodeunit']);
+    grunt.registerTask('test', ['clean', 'anyhtmltojson', 'nodeunit']);
 
     // By default, lint and run all tests.
     grunt.registerTask('default', ['jshint', 'test']);

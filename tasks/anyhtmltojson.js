@@ -6,14 +6,14 @@ const EOL = require('os').EOL;
 const prettyBytes = require('pretty-bytes');
 
 /*
- * grunt-html2json
- * https://github.com/bsouza/html2json
+ * anyhtmltojson
+ * https://github.com/brnosouza/anyhtmltojson
  *
  * Copyright (c) 2019 Bruno Souza
  * Licensed under the MIT license.
  */
 
-class HTML2JSON {
+class AnyHTMLToJSON {
     constructor(grunt) {
         this.defaults = {
             pretty_print  : false,
@@ -88,7 +88,7 @@ class HTML2JSON {
     ready() {
         const self = this;
 
-        this.grunt.registerMultiTask('html2json', 'Transform HTML in JSON string', function () {
+        this.grunt.registerMultiTask('anyhtmltojson', 'Transform HTML in JSON string', function () {
             self.options = this.options(this.defaults);
 
             for (let i = 0; i < this.files.length; i++) {
@@ -107,5 +107,5 @@ class HTML2JSON {
 }
 
 module.exports = function (grunt) {
-    new HTML2JSON(grunt).ready();
+    new AnyHTMLToJSON(grunt).ready();
 };

@@ -3,7 +3,7 @@ module.exports = function (grunt) {
 
     // project configuration
     grunt.initConfig({
-        html2json: {
+        anyhtmltojson: {
             options: {
                 pretty_print: true
             },
@@ -18,5 +18,5 @@ module.exports = function (grunt) {
     grunt.loadTasks('../tasks');
 
     // Default task.
-    grunt.registerTask('default', 'html2json');
+    grunt.registerTask('default', 'anyhtmltojson');
 };

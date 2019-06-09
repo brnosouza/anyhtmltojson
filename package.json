@@ -1,23 +1,23 @@
 {
-  "name": "grunt-html2json",
+  "name": "anyhtmltojson",
   "description": "Transform HTML in JSON string",
-  "version": "0.1.0",
-  "homepage": "https://github.com/bsouza/html2json",
+  "version": "0.1.1",
+  "homepage": "https://github.com/brnosouza/anyhtmltojson",
   "author": {
     "name": "Bruno Souza",
     "email": "brnosouza@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/bsouza/html2json.git"
+    "url": "git://github.com/brnosouza/anyhtmltojson"
   },
   "bugs": {
-    "url": "https://github.com/bsouza/html2json/issues"
+    "url": "https://github.com/brnosouza/anyhtmltojson/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/bsouza/html2json/blob/master/LICENSE-MIT"
+      "url": "https://github.com/brnosouza/anyhtmltojson/blob/master/LICENSE-MIT"
     }
   ],
   "engines": {

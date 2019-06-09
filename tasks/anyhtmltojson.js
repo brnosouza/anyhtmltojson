@@ -59,6 +59,7 @@ class AnyHTMLToJSON {
         if (this.options.enable_htmlmin) {
             try {
                 minifiedHtml = minify(content, this.options.htmlmin);
+                console.log(minifiedHtml);
             } catch (err) {
                 this.grunt.warn(`${ filepath } ${ EOL } ${ err }`);
                 this.errorCount++;
@@ -89,7 +90,7 @@ class AnyHTMLToJSON {
         const self = this;
 
         this.grunt.registerMultiTask('anyhtmltojson', 'Transform HTML in JSON string', function () {
-            self.options = this.options(this.defaults);
+            self.options = this.options(self.defaults);
 
             for (let i = 0; i < this.files.length; i++) {
                 const file = this.files[i];

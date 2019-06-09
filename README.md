@@ -24,16 +24,29 @@ In your project's Gruntfile, add a section named `anyhtmltojson` to the data obj
 
 ```js
 grunt.initConfig({
-  anyhtmltojson: {
-    options: {
-      // Task-specific options go here.
-    },
-     dist: { // or any other target
-       src: ['src/*.txt', 'src/*.html'],
-       dest: 'dist/templates.json'
+    anyhtmltojson: {
+        options: {
+            // Defaults
+            pretty_print  : false,
+            enable_htmlmin: true,
+            htmlmin       : {
+                collapseWhitespace : true,
+                minifyCSS          : true,
+                minifyJS           : true,
+                minifyURLs         : true,
+                preserveLineBreaks : false,
+                removeComments     : true,
+                removeOptionalTags : true,
+                removeTagWhitespace: true
+            }
+        },
+        dist   : { // or any other target
+            src : ['src/*.txt', 'src/*.html'],
+            dest: 'dist/templates.json'
+        }
     }
-  },
 });
+
 ```
 
 ### Options
@@ -51,8 +64,23 @@ Default value: `true`
 Enable HTML minification.
 
 #### options.htmlmin
+Type: `Object`
 
-See the `html-minifier` [options](https://github.com/kangax/html-minifier#options-quick-reference).
+Default: 
+```json
+{
+  "collapseWhitespace": true,
+  "minifyCSS": true,
+  "minifyJS": true,
+  "minifyURLs": true,
+  "preserveLineBreaks": false,
+  "removeComments": true,
+  "removeOptionalTags": true,
+  "removeTagWhitespace": true
+}
+```
+
+See the `html-minifier` [options](https://github.com/kangax/html-minifier#options-quick-reference) for more.
  
 
 
